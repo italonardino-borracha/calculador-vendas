@@ -6,42 +6,40 @@
 <title>CALCULADOR DE VENDAS</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#0f0f0f;color:#fff;min-height:100vh;padding:18px 12px 40px}
+body{background:#0f0f0f;color:#fff;padding:18px 12px 40px}
 .top{text-align:center;margin-bottom:16px}
-.top h1{font-size:28px;letter-spacing:1px}
-.top a{color:#ffd700;text-decoration:none;font-weight:bold;font-size:15px}
+.top h1{font-size:28px}
+.top a{color:#ffd700;text-decoration:none;font-weight:bold}
 .card{background:#1c1c1c;border-radius:16px;padding:16px;max-width:980px;margin:0 auto 14px}
 h2{font-size:17px;margin-bottom:6px}
 .sub{color:#ccc;font-size:13px;margin-bottom:12px}
 label{display:block;font-size:14px;font-weight:bold;margin:12px 0 6px}
-input,select{width:100%;background:#2a2a2a;border:1px solid #444;color:#fff;border-radius:10px;padding:12px;font-size:15px;outline:none}
-input::placeholder{color:#888}
-.row{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 38px;gap:8px;align-items:center;margin-bottom:8px}
+input,select{width:100%;background:#2a2a2a;border:1px solid #444;color:#fff;border-radius:10px;padding:12px;font-size:15px}
+.row{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 38px;gap:8px;margin-bottom:8px}
 .row input{padding:11px 9px;font-size:14px}
-.x{background:#e11d48;border:0;color:#fff;border-radius:10px;height:42px;font-weight:bold;cursor:pointer}
-.add{width:100%;background:#333;border:0;color:#fff;border-radius:10px;padding:12px;font-weight:bold;cursor:pointer;margin-top:4px}
+.x{background:#e11d48;border:0;color:#fff;border-radius:10px;height:42px;font-weight:bold}
+.add{width:100%;background:#333;border:0;color:#fff;border-radius:10px;padding:12px;font-weight:bold;margin-top:4px}
 .hint{color:#ffd700;font-size:12px;margin-top:10px;line-height:1.5}
-.erro{background:#e11d48;color:#fff;border-radius:12px;padding:14px;font-weight:bold;font-size:14px;line-height:1.5;margin-top:12px}
+.erro{background:#e11d48;color:#fff;border-radius:12px;padding:14px;font-weight:bold;font-size:14px;margin-top:12px}
 .erro small{display:block;font-weight:normal;margin-top:4px}
-.okbox{background:#1a5c1a;color:#fff;border-radius:12px;padding:12px;font-weight:bold;font-size:14px;margin-top:12px}
+.okbox{background:#1a5c1a;color:#fff;border-radius:12px;padding:12px;font-weight:bold;margin-top:12px}
 .plats{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-.plats button{background:#2a2a2a;border:1px solid #444;color:#fff;border-radius:20px;padding:9px 13px;cursor:pointer;font-size:14px}
-.plats button.on{background:#ffd700;color:#000;border-color:#ffd700;font-weight:bold}
-.calc{width:100%;background:#ffd700;border:0;border-radius:12px;padding:15px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:14px;color:#000}
-.sair{width:100%;background:#333;border:0;border-radius:12px;padding:12px;font-weight:bold;cursor:pointer;margin-top:8px;color:#fff}
+.plats button{background:#2a2a2a;border:1px solid #444;color:#fff;border-radius:20px;padding:9px 13px}
+.plats button.on{background:#ffd700;color:#000;font-weight:bold}
+.calc{width:100%;background:#ffd700;border:0;border-radius:12px;padding:15px;font-weight:bold;font-size:16px;margin-top:14px;color:#000}
+.sair{width:100%;background:#333;border:0;color:#fff;border-radius:12px;padding:12px;font-weight:bold;margin-top:8px}
 .res{background:#ffd700;color:#000;border-radius:14px;padding:16px;text-align:center;margin-bottom:10px}
 .res b{display:block;font-size:16px}
 .res span{font-size:22px;font-weight:bold}
 .res small{display:block;font-size:13px;margin-top:4px;font-weight:bold}
-.eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:0;font-size:18px;cursor:pointer}
+.eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:#444;border:0;color:#fff;border-radius:8px;padding:6px 10px}
 .wrap{position:relative}
 .hidden{display:none}
 .ok{color:#7CFC00;font-size:13px;margin-top:8px}
 .tabs{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-.tabs button{background:#2a2a2a;border:1px solid #444;color:#fff;border-radius:20px;padding:9px 14px;cursor:pointer}
+.tabs button{background:#2a2a2a;border:1px solid #444;color:#fff;border-radius:20px;padding:9px 14px}
 .tabs button.on{background:#ffd700;color:#000;font-weight:bold}
 .cfg{display:grid;grid-template-columns:1fr 110px;gap:8px;align-items:center;margin-bottom:8px}
-.cfg span{font-size:14px}
 .cfg input{text-align:right}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{border-bottom:1px solid #333;padding:10px 6px;text-align:left;vertical-align:top}
@@ -49,162 +47,152 @@ th{color:#ffd700}
 .pill{display:inline-block;padding:4px 8px;border-radius:20px;font-size:12px;font-weight:bold}
 .pill.on{background:#1a5c1a;color:#fff}
 .pill.off{background:#e11d48;color:#fff}
-.tgl{border:0;border-radius:20px;padding:7px 12px;font-weight:bold;cursor:pointer;font-size:12px}
+.tgl{border:0;border-radius:20px;padding:7px 12px;font-weight:bold;font-size:12px}
 .tgl.on{background:#1a5c1a;color:#fff}
 .tgl.off{background:#e11d48;color:#fff}
-@media(max-width:640px){.row{grid-template-columns:1fr 1fr}.row .x{grid-column:span 2}.cfg{grid-template-columns:1fr 90px}}
+@media(max-width:640px){.row{grid-template-columns:1fr 1fr}.row .x{grid-column:span 2}}
 </style>
 </head>
 <body>
 <div class="top"><h1>CALCULADOR DE VENDAS</h1><a href="https://www.instagram.com/italoborracha_fireworks" target="_blank">by @italoborracha_fireworks</a></div>
 
 <div class="card" id="loginCard">
-<h2>Acesso</h2><div class="sub">Faça login ou crie sua conta para continuar.</div>
+<h2>Acesso</h2><div class="sub">Faca login ou crie sua conta.</div>
 <label>Nome</label><input id="nome" placeholder="Seu nome">
-<label>Senha</label><div class="wrap"><input id="senha" type="password" placeholder="Senha"><button class="eye" onclick="verSenha()">👁️</button></div>
-<button class="calc" onclick="entrar()">ENTRAR</button>
-<button class="add" onclick="cadastrar()">CADASTRAR</button>
+<label>Senha</label><div class="wrap"><input id="senha" type="password" placeholder="Senha"><button class="eye" id="btnOlho" type="button">OLHO</button></div>
+<button class="calc" id="btnEntrar" type="button">ENTRAR</button>
+<button class="add" id="btnCad" type="button">CADASTRAR</button>
 <div class="ok" id="msgLogin"></div>
-<div class="sub" id="meuIp" style="margin-top:10px">Detectando seu acesso...</div>
+<div class="sub" id="versao" style="margin-top:10px">Versao: ADMIN-IP-V3 - se voce ve isso, o codigo novo entrou.</div>
 </div>
 
 <div class="card hidden" id="adminCard">
-<h2>PAINEL ADMIN</h2><div class="sub">Controle total. Monitora quem acessa, de onde, e bloqueia IP suspeito.</div>
-<div class="tabs"><button id="tabAcesso" class="on" onclick="aba('acesso')">Acessos / IPs</button><button id="tabCfg" onclick="aba('cfg')">Configurações</button><button id="tabUser" onclick="aba('user')">Usuários</button><button id="tabCalc" onclick="aba('calc')">Testar Calculador</button></div>
+<h2>PAINEL ADMIN</h2><div class="sub">Controle total. Monitora acessos, bloqueia IP suspeito.</div>
+<div class="tabs"><button id="tAcesso" class="on" type="button">Acessos / IPs</button><button id="tCfg" type="button">Configuracoes</button><button id="tUser" type="button">Usuarios</button><button id="tCalc" type="button">Testar Calculador</button></div>
 
 <div id="paneAcesso">
-<div class="sub">Cada login gera um registro aqui. O botão liga/desliga bloqueia aquele IP. IP bloqueado não entra mais, mesmo com a senha certa.</div>
-<div class="sub" id="meuIpAdmin"></div>
-<table><thead><tr><th>Nome</th><th>IP</th><th>Região</th><th>Aparelho</th><th>Data</th><th>Status</th><th></th></tr></thead><tbody id="tbodyAcesso"></tbody></table>
+<div class="sub">Cada login gera um registro aqui. O botao liga/desliga bloqueia aquele IP.</div>
+<label>Registrar acesso manual - Nome</label><input id="regNome" placeholder="Nome de quem acessou">
+<label>IP do aparelho</label><input id="regIp" placeholder="Ex: 192.168.0.10">
+<label>Cidade / Regiao</label><input id="regRegiao" placeholder="Ex: Curitiba / Centro - PR">
+<button class="calc" id="btnReg" type="button">REGISTRAR ACESSO</button>
+<table><thead><tr><th>Nome</th><th>IP</th><th>Regiao</th><th>Data</th><th>Status</th><th></th></tr></thead><tbody id="tbodyAcesso"></tbody></table>
 <div class="sub" id="semAcesso">Nenhum acesso registrado ainda.</div>
-<button class="add" onclick="limparAcessos()">LIMPAR HISTÓRICO DE ACESSOS</button>
+<button class="add" id="btnLimparAcesso" type="button">LIMPAR HISTORICO</button>
 </div>
 
 <div id="paneCfg" class="hidden">
-<label>Taxas das plataformas (%)</label><div id="cfgTaxas"></div>
+<label>Taxas (%)</label><div id="cfgTaxas"></div>
 <label>Custos e margens</label>
-<div class="cfg"><span>Custo invisível (%)</span><input id="cfgInv" type="number" value="18"></div>
-<div class="cfg"><span>Lucro sobre custo (%) - Sugerido</span><input id="cfgLucro" type="number" value="25"></div>
-<div class="cfg"><span>Acréscimo Anunciar (%)</span><input id="cfgAnunciar" type="number" value="28"></div>
-<div class="cfg"><span>Acréscimo Promoção (%)</span><input id="cfgPromo" type="number" value="18"></div>
-<div class="cfg"><span>Desconto a aplicar na promoção (%)</span><input id="cfgDesc" type="number" value="15"></div>
-<label>Localidade (fator)</label>
+<div class="cfg"><span>Custo invisivel (%)</span><input id="cfgInv" type="number" value="18"></div>
+<div class="cfg"><span>Lucro Sugerido (%)</span><input id="cfgLucro" type="number" value="25"></div>
+<div class="cfg"><span>Acrescimo Anunciar (%)</span><input id="cfgAnunciar" type="number" value="28"></div>
+<div class="cfg"><span>Acrescimo Promocao (%)</span><input id="cfgPromo" type="number" value="18"></div>
+<div class="cfg"><span>Desconto promocao (%)</span><input id="cfgDesc" type="number" value="15"></div>
+<label>Localidade</label>
 <div class="cfg"><span>Centro</span><input id="locCentro" type="number" step="0.01" value="1.15"></div>
 <div class="cfg"><span>Bairro</span><input id="locBairro" type="number" step="0.01" value="1.05"></div>
-<div class="cfg"><span>Região afastada</span><input id="locAfastada" type="number" step="0.01" value="1.10"></div>
+<div class="cfg"><span>Regiao afastada</span><input id="locAfastada" type="number" step="0.01" value="1.10"></div>
 <div class="cfg"><span>Interior</span><input id="locInterior" type="number" step="0.01" value="1.00"></div>
-<button class="calc" onclick="salvarCfg()">SALVAR CONFIGURAÇÕES</button>
+<button class="calc" id="btnSalvarCfg" type="button">SALVAR CONFIGURACOES</button>
 <div id="msgCfg"></div>
-<button class="add" onclick="restaurarCfg()">RESTAURAR PADRÃO</button>
 </div>
 
 <div id="paneUser" class="hidden">
-<div class="sub">Usuários cadastrados.</div>
 <table><thead><tr><th>Nome</th><th>Data</th><th></th></tr></thead><tbody id="tbodyUser"></tbody></table>
-<div class="sub" id="semUser">Nenhum usuário ainda.</div>
-<button class="add" onclick="limparUsuarios()">LIMPAR USUÁRIOS</button>
+<div class="sub" id="semUser">Nenhum usuario ainda.</div>
+<button class="add" id="btnLimparUser" type="button">LIMPAR USUARIOS</button>
 </div>
 
 <div id="paneCalc" class="hidden">
-<div class="sub">Teste o calculador como aluno, usando as configurações salvas.</div>
-<button class="calc" onclick="abrirCalcDoAdmin()">ABRIR CALCULADOR</button>
+<button class="calc" id="btnAbrirCalc" type="button">ABRIR CALCULADOR</button>
 </div>
-<button class="sair" onclick="sair()">SAIR</button>
+<button class="sair" id="btnSairAdmin" type="button">SAIR</button>
 </div>
 
 <div class="card hidden" id="calcCard">
-<h2>IA GERENTE CALCULADOR</h2><div class="sub">Me fala o produto e os insumos. Eu pergunto o que faltar.</div>
-<label>O que você vende? Nome + tamanho / peso / área / tempo</label>
-<input id="produto" placeholder="Digite aqui">
-<label>Localidade</label>
-<select id="local"><option>Centro</option><option>Bairro</option><option>Região afastada</option><option>Interior</option></select>
-<label>Quais insumos / materiais acompanham?</label>
-<div id="lista"></div>
-<button class="add" onclick="novaLinha()">+ ADICIONAR INSUMO</button>
-<div class="hint">Para cada insumo: Nome + Quantidade comprada + Valor total pago + Quanto usa em 1 unidade. Ex: Carne - 1kg - 50,30 - 250g. Sacola - 1000 - 27,00 - 1.</div>
+<h2>IA GERENTE CALCULADOR</h2><div class="sub">Me fala o produto e os insumos.</div>
+<label>O que voce vende? Nome + tamanho / peso / area / tempo</label><input id="produto" placeholder="Digite aqui">
+<label>Localidade</label><select id="local"><option>Centro</option><option>Bairro</option><option>Regiao afastada</option><option>Interior</option></select>
+<label>Quais insumos / materiais acompanham?</label><div id="lista"></div>
+<button class="add" id="btnAdd" type="button">+ ADICIONAR INSUMO</button>
+<div class="hint">Nome + Qtd comprada + Valor pago + Usa em 1 unidade. Ex: Carne - 1kg - 50,30 - 250g. Sacola - 1000 - 27,00 - 1.</div>
 <div id="alerta" class="erro hidden"></div>
-<label>Plataforma</label>
-<div class="plats" id="plats"></div>
-<button class="calc" onclick="calcular()">CALCULAR</button>
-<button class="sair" onclick="sair()">SAIR</button>
+<label>Plataforma</label><div class="plats" id="plats"></div>
+<button class="calc" id="btnCalc" type="button">CALCULAR</button>
+<button class="sair" id="btnSairCalc" type="button">SAIR</button>
 </div>
 
 <div class="card hidden" id="resCard">
-<div class="res"><b>PREÇO SUGERIDO</b><span id="r1">R$ 0,00</span></div>
-<div class="res"><b>PREÇO PARA ANUNCIAR</b><span id="r2">R$ 0,00</span></div>
-<div class="res"><b>PREÇO COM MARGEM PARA PROMOÇÃO</b><span id="r3">R$ 0,00</span><small id="rPct"></small></div>
+<div class="res"><b>PRECO SUGERIDO</b><span id="r1">R$ 0,00</span></div>
+<div class="res"><b>PRECO PARA ANUNCIAR</b><span id="r2">R$ 0,00</span></div>
+<div class="res"><b>PRECO COM MARGEM PARA PROMOCAO</b><span id="r3">R$ 0,00</span><small id="rPct"></small></div>
 </div>
 
 <script>
-var PLATS=[" 【entity-iFood¦canonical_name=iFood】","99Food","Keeta","Happy"," 【entity-Mercado Livre¦canonical_name=Mercado Livre】"," 【entity-Shopee¦canonical_name=Shopee】"," 【entity-Elo7¦canonical_name=Elo7】"," 【entity-Shein¦canonical_name=Shein】","Balcão"];
-var PADRAO={taxas:{" 【entity-iFood¦canonical_name=iFood】":27,"99Food":27,"Keeta":20,"Happy":18," 【entity-Mercado Livre¦canonical_name=Mercado Livre】":16," 【entity-Shopee¦canonical_name=Shopee】":20," 【entity-Elo7¦canonical_name=Elo7】":15," 【entity-Shein¦canonical_name=Shein】":18,"Balcão":0},inv:18,lucro:25,anunciar:28,promo:18,desc:15,loc:{"Centro":1.15,"Bairro":1.05,"Região afastada":1.10,"Interior":1.00}};
+var PLATS=["【entity-iFood¦canonical_name=iFood】","99Food","Keeta","Happy","Mercado Livre","Shopee","Elo7","Shein","Balcao"];
+var PADRAO={taxas:{"【entity-iFood¦canonical_name=iFood】":27,"99Food":27,"Keeta":20,"Happy":18,"Mercado Livre":16,"Shopee":20,"Elo7":15,"Shein":18,"Balcao":0},inv:18,lucro:25,anunciar:28,promo:18,desc:15,loc:{"Centro":1.15,"Bairro":1.05,"Regiao afastada":1.10,"Interior":1.00}};
 var SENHA_ADMIN="IB208425173251204090326";
 var SENHA_ALUNO="METODO1507";
-var MEU_IP={ip:"Não identificado",cidade:"-",regiao:"-",pais:"-"};
-function limpaSenha(s){return String(s||"").trim().replace(/\s/g,"").replace(/^@/,"")}
+var sel="【entity-iFood¦canonical_name=iFood】";
+function $(id){return document.getElementById(id)}
+function limpa(s){return String(s||"").trim().replace(/\s/g,"").replace(/^@/,"")}
 function getCfg(){try{var c=JSON.parse(localStorage.getItem("calc_cfg"));if(c&&c.taxas)return c}catch(e){}return JSON.parse(JSON.stringify(PADRAO))}
-function setCfg(c){localStorage.setItem("calc_cfg",JSON.stringify(c))}
+function setCfg(c){try{localStorage.setItem("calc_cfg",JSON.stringify(c))}catch(e){}}
 function getAcessos(){try{return JSON.parse(localStorage.getItem("calc_acessos")||"[]")}catch(e){return[]}}
-function getBloqueados(){try{return JSON.parse(localStorage.getItem("calc_blocked")||"[]")}catch(e){return[]}}
-function setBloqueados(a){localStorage.setItem("calc_blocked",JSON.stringify(a))}
+function getBloq(){try{return JSON.parse(localStorage.getItem("calc_blocked")||"[]")}catch(e){return[]}}
+function setBloq(a){try{localStorage.setItem("calc_blocked",JSON.stringify(a))}catch(e){}}
 function getUsers(){try{return JSON.parse(localStorage.getItem("calc_users")||"[]")}catch(e){return[]}}
-function detectarIp(){
-  fetch("https://ipapi.co/json/").then(function(r){return r.json()}).then(function(d){
-    MEU_IP={ip:d.ip||"Não identificado",cidade:d.city||"-",regiao:d.region||"-",pais:d.country_name||"-"};
-    document.getElementById("meuIp").textContent="Seu acesso: "+MEU_IP.ip+" - "+MEU_IP.cidade+" / "+MEU_IP.regiao+" - "+MEU_IP.pais;
-    document.getElementById("meuIpAdmin").textContent="Seu acesso agora: "+MEU_IP.ip+" - "+MEU_IP.cidade+" / "+MEU_IP.regiao+" - "+MEU_IP.pais;
-  }).catch(function(){document.getElementById("meuIp").textContent="Seu acesso: IP não identificado pelo navegador."});
+function renderPlats(){var p=$("plats");p.innerHTML="";PLATS.forEach(function(n){var b=document.createElement("button");b.type="button";b.textContent=n;if(n===sel)b.className="on";b.onclick=function(){sel=n;var all=p.querySelectorAll("button");for(var i=0;i<all.length;i++)all[i].className="";b.className="on"};p.appendChild(b)})}
+function renderCfg(){var c=getCfg();var box=$("cfgTaxas");box.innerHTML="";PLATS.forEach(function(n){var d=document.createElement("div");d.className="cfg";var s=document.createElement("span");s.textContent=n+" (%)";var inp=document.createElement("input");inp.type="number";inp.setAttribute("data-plat",n);inp.value=c.taxas[n]||0;d.appendChild(s);d.appendChild(inp);box.appendChild(d)});$("cfgInv").value=c.inv;$("cfgLucro").value=c.lucro;$("cfgAnunciar").value=c.anunciar;$("cfgPromo").value=c.promo;$("cfgDesc").value=c.desc;$("locCentro").value=c.loc["Centro"];$("locBairro").value=c.loc["Bairro"];$("locAfastada").value=c.loc["Regiao afastada"];$("locInterior").value=c.loc["Interior"]}
+function renderAcessos(){var a=getAcessos();var b=getBloq();var tb=$("tbodyAcesso");tb.innerHTML="";$("semAcesso").style.display=a.length?"none":"block";a.forEach(function(x){var bloq=b.indexOf(x.ip)>-1;var tr=document.createElement("tr");var c1=document.createElement("td");c1.textContent=x.nome+" ("+x.tipo+")";var c2=document.createElement("td");c2.textContent=x.ip;var c3=document.createElement("td");c3.textContent=x.regiao;var c4=document.createElement("td");c4.textContent=x.data;var c5=document.createElement("td");c5.innerHTML='<span class="pill '+(bloq?"off":"on")+'">'+(bloq?"BLOQUEADO":"ATIVO")+'</span>';var c6=document.createElement("td");var btn=document.createElement("button");btn.className="tgl "+(bloq?"off":"on");btn.textContent=bloq?"DESBLOQUEAR":"BLOQUEAR";btn.onclick=function(){var bb=getBloq();var ix=bb.indexOf(x.ip);if(ix>-1){bb.splice(ix,1)}else{bb.push(x.ip)}setBloq(bb);renderAcessos()};c6.appendChild(btn);tr.appendChild(c1);tr.appendChild(c2);tr.appendChild(c3);tr.appendChild(c4);tr.appendChild(c5);tr.appendChild(c6);tb.appendChild(tr)})}
+function renderUsers(){var u=getUsers();var tb=$("tbodyUser");tb.innerHTML="";$("semUser").style.display=u.length?"none":"block";u.forEach(function(x,i){var tr=document.createElement("tr");var a=document.createElement("td");a.textContent=x.nome;var b=document.createElement("td");b.textContent=x.data;var c=document.createElement("td");var btn=document.createElement("button");btn.className="x";btn.textContent="X";btn.onclick=function(){var uu=getUsers();uu.splice(i,1);try{localStorage.setItem("calc_users",JSON.stringify(uu))}catch(e){}renderUsers()};c.appendChild(btn);tr.appendChild(a);tr.appendChild(b);tr.appendChild(c);tb.appendChild(tr)})}
+function aba(q){$("paneAcesso").classList.toggle("hidden",q!=="acesso");$("paneCfg").classList.toggle("hidden",q!=="cfg");$("paneUser").classList.toggle("hidden",q!=="user");$("paneCalc").classList.toggle("hidden",q!=="calc");$("tAcesso").className=q==="acesso"?"on":"";$("tCfg").className=q==="cfg"?"on":"";$("tUser").className=q==="user"?"on":"";$("tCalc").className=q==="calc"?"on":"";if(q==="acesso")renderAcessos();if(q==="user")renderUsers()}
+function mostrarCalc(){$("loginCard").classList.add("hidden");$("adminCard").classList.add("hidden");$("calcCard").classList.remove("hidden");$("resCard").classList.remove("hidden")}
+function sair(){$("calcCard").classList.add("hidden");$("resCard").classList.add("hidden");$("adminCard").classList.add("hidden");$("loginCard").classList.remove("hidden")}
+function novaLinha(){var d=document.createElement("div");d.className="row";for(var i=0;i<4;i++){var inp=document.createElement("input");inp.placeholder=["Nome do insumo","Qtd comprada","Valor pago","Usa em 1 un."][i];d.appendChild(inp)}var b=document.createElement("button");b.className="x";b.textContent="X";b.onclick=function(){d.remove()};d.appendChild(b);$("lista").appendChild(d)}
+function numf(v){if(!v)return 0;v=String(v).trim().replace(/\s/g,"");if(v.indexOf(",")>-1){v=v.replace(/\./g,"").replace(",",".")}return parseFloat(v)||0}
+function qtdBase(t){if(!t)return 0;var s=String(t).toLowerCase().replace(/\s/g,"").replace(",",".");var n=parseFloat(s)||0;if(s.indexOf("kg")>-1)return n*1000;if(s.indexOf("g")>-1)return n;if(s.indexOf("l")>-1)return n*1000;if(s.indexOf("ml")>-1)return n;return n}
+function usaBase(t){if(!t||!String(t).trim())return 1;var s=String(t).toLowerCase().replace(/\s/g,"").replace(",",".");var n=parseFloat(s)||0;if(s.indexOf("kg")>-1)return n*1000;if(s.indexOf("g")>-1)return n;if(s.indexOf("l")>-1)return n*1000;if(s.indexOf("ml")>-1)return n;return n||1}
+function isPeso(t){var s=String(t||"").toLowerCase();return s.indexOf("kg")>-1||s.indexOf("g")>-1||s.indexOf("ml")>-1||s.indexOf("l")>-1}
+function pesoProd(t){var m=String(t||"").toLowerCase().replace(",",".").match(/(\d+(?:\.\d+)?)\s*(kg|g|ml|l)\b/);if(!m)return 0;var n=parseFloat(m[1]);if(m[2]==="kg")return n*1000;if(m[2]==="g")return n;if(m[2]==="l")return n*1000;return n}
+function fmt(v){return "R$ "+v.toFixed(2).replace(".",",")}
+function registrar(nome,tipo,ip,regiao){var a=getAcessos();a.unshift({nome:nome,tipo:tipo,ip:ip||"Manual",regiao:regiao||"-",data:new Date().toLocaleString("pt-BR")});try{localStorage.setItem("calc_acessos",JSON.stringify(a.slice(0,200)))}catch(e){}}
+function calcular(){
+  var al=$("alerta");al.classList.add("hidden");
+  var cfg=getCfg();var rows=document.querySelectorAll("#lista .row");var soma=0;var somaPeso=0;var temPeso=false;
+  rows.forEach(function(r){var ins=r.querySelectorAll("input");var nome=ins[0].value,qtd=ins[1].value,val=numf(ins[2].value),usaTxt=ins[3].value;if(!nome||!qtd||!val)return;var q=qtdBase(qtd);if(q<=0)return;var usa=usaBase(usaTxt);soma+=(val/q)*usa;if(isPeso(usaTxt)){somaPeso+=usa;temPeso=true}});
+  if(soma<=0){al.classList.remove("hidden");al.textContent="Preencha pelo menos um insumo com valor.";return}
+  var prod=$("produto").value;var pp=pesoProd(prod);
+  if(pp>0&&temPeso){
+    if(somaPeso>pp){al.classList.remove("hidden");al.innerHTML="PESO ERRADO - NAO CALCULEI. Voce escreveu "+prod.toUpperCase()+", mas colocou "+somaPeso+"g. Esta "+(somaPeso-pp)+"g a mais.";return}
+    if(somaPeso<pp*0.5){al.classList.remove("hidden");al.innerHTML="FALTA PESO - CONFERE? Voce escreveu "+prod.toUpperCase()+", mas colocou so "+somaPeso+"g. Faltam "+(pp-somaPeso)+"g.";return}
+  }
+  var locF=cfg.loc[$("local").value]||1;var custo=soma*(1+cfg.inv/100)*locF;var taxa=(cfg.taxas[sel]||0)/100;var sug=custo/(1-taxa);sug=sug*(1+cfg.lucro/100);var anu=sug*(1+cfg.anunciar/100);var pro=anu*(1+cfg.promo/100);
+  $("r1").textContent=fmt(sug);$("r2").textContent=fmt(anu);$("r3").textContent=fmt(pro);$("rPct").textContent="Aplique "+cfg.desc+"% de desconto";
 }
-detectarIp();
-function registrarAcesso(nome,tipo){
-  var a=getAcessos();
-  a.unshift({nome:nome,tipo:tipo,ip:MEU_IP.ip,cidade:MEU_IP.cidade,regiao:MEU_IP.regiao,pais:MEU_IP.pais,aparelho:navigator.userAgent.indexOf("Mobile")>-1?"Celular":"Computador",data:new Date().toLocaleString("pt-BR")});
-  localStorage.setItem("calc_acessos",JSON.stringify(a.slice(0,200)));
-}
-function renderAcessos(){
-  var a=getAcessos();var b=getBloqueados();var tb=document.getElementById("tbodyAcesso");tb.innerHTML="";
-  document.getElementById("semAcesso").style.display=a.length?"none":"block";
-  a.forEach(function(x){
-    var bloq=b.indexOf(x.ip)>-1;
-    var tr=document.createElement("tr");
-    tr.innerHTML="<td>"+x.nome+"<br><small>"+x.tipo+"</small></td><td>"+x.ip+"</td><td>"+x.cidade+" / "+x.regiao+"<br>"+x.pais+"</td><td>"+x.aparelho+"</td><td>"+x.data+"</td><td><span class='pill "+(bloq?"off":"on")+"'>"+(bloq?"BLOQUEADO":"ATIVO")+"</span></td><td><button class='tgl "+(bloq?"off":"on")+"' onclick=\"alternarIp('"+x.ip+"')\">"+(bloq?"DESBLOQUEAR":"BLOQUEAR")+"</button></td>";
-    tb.appendChild(tr);
-  });
-}
-function alternarIp(ip){
-  var b=getBloqueados();var i=b.indexOf(ip);
-  if(i>-1){b.splice(i,1)}else{b.push(ip)}
-  setBloqueados(b);renderAcessos();
-}
-function limparAcessos(){localStorage.setItem("calc_acessos",JSON.stringify([]));renderAcessos()}
-function renderCfg(){
-  var c=getCfg();var box=document.getElementById("cfgTaxas");box.innerHTML="";
-  PLATS.forEach(function(p){var d=document.createElement("div");d.className="cfg";d.innerHTML="<span>"+p+" (%)</span><input type='number' data-plat='"+p+"' value='"+(c.taxas[p]||0)+"'>";box.appendChild(d)});
-  document.getElementById("cfgInv").value=c.inv;document.getElementById("cfgLucro").value=c.lucro;document.getElementById("cfgAnunciar").value=c.anunciar;document.getElementById("cfgPromo").value=c.promo;document.getElementById("cfgDesc").value=c.desc;
-  document.getElementById("locCentro").value=c.loc["Centro"];document.getElementById("locBairro").value=c.loc["Bairro"];document.getElementById("locAfastada").value=c.loc["Região afastada"];document.getElementById("locInterior").value=c.loc["Interior"];
-}
-function salvarCfg(){
-  var c=getCfg();document.querySelectorAll("#cfgTaxas input").forEach(function(i){c.taxas[i.getAttribute("data-plat")]=parseFloat(i.value)||0});
-  c.inv=parseFloat(document.getElementById("cfgInv").value)||0;c.lucro=parseFloat(document.getElementById("cfgLucro").value)||0;c.anunciar=parseFloat(document.getElementById("cfgAnunciar").value)||0;c.promo=parseFloat(document.getElementById("cfgPromo").value)||0;c.desc=parseFloat(document.getElementById("cfgDesc").value)||0;
-  c.loc={"Centro":parseFloat(document.getElementById("locCentro").value)||1,"Bairro":parseFloat(document.getElementById("locBairro").value)||1,"Região afastada":parseFloat(document.getElementById("locAfastada").value)||1,"Interior":parseFloat(document.getElementById("locInterior").value)||1};
-  setCfg(c);document.getElementById("msgCfg").innerHTML='<div class="okbox">SALVO. Já vale para todos os cálculos.</div>';renderPlats();
-}
-function restaurarCfg(){setCfg(JSON.parse(JSON.stringify(PADRAO)));renderCfg();renderPlats();document.getElementById("msgCfg").innerHTML='<div class="okbox">Padrão restaurado.</div>'}
-function aba(q){
-  ["acesso","cfg","user","calc"].forEach(function(k){document.getElementById("pane"+(k==="acesso"?"Acesso":k==="cfg"?"Cfg":k==="user"?"User":"Calc")).classList.toggle("hidden",q!==k)});
-  document.getElementById("tabAcesso").className=q==="acesso"?"on":"";document.getElementById("tabCfg").className=q==="cfg"?"on":"";document.getElementById("tabUser").className=q==="user"?"on":"";document.getElementById("tabCalc").className=q==="calc"?"on":"";
-  if(q==="acesso")renderAcessos();if(q==="user")renderUsers();
-}
-function renderUsers(){var u=getUsers();var tb=document.getElementById("tbodyUser");tb.innerHTML="";document.getElementById("semUser").style.display=u.length?"none":"block";u.forEach(function(x,i){var tr=document.createElement("tr");tr.innerHTML="<td>"+x.nome+"</td><td>"+x.data+"</td><td><button class='x' onclick='remUser("+i+")'>X</button></td>";tb.appendChild(tr)})}
-function remUser(i){var u=getUsers();u.splice(i,1);localStorage.setItem("calc_users",JSON.stringify(u));renderUsers()}
-function limparUsuarios(){localStorage.setItem("calc_users",JSON.stringify([]));renderUsers()}
-function abrirCalcDoAdmin(){document.getElementById("adminCard").classList.add("hidden");document.getElementById("calcCard").classList.remove("hidden");document.getElementById("resCard").classList.remove("hidden")}
-var sel=" iFood";
-function renderPlats(){var plats=document.getElementById("plats");plats.innerHTML="";PLATS.forEach(function(p){var b=document.createElement("button");b.textContent=p;if(p===sel)b.className="on";b.onclick=function(){sel=p;document.querySelectorAll("#plats button").forEach(function(x){x.className=""});b.className="on"};plats.appendChild(b)})}
-renderPlats();renderCfg();
-function verSenha(){var s=document.getElementById("senha");s.type=s.type==="password"?"text":"password"}
-function entrar(){
-  var nome=document.getElementById("nome").value.trim()||"Sem nome";
-  var bruto=document.getElementById("senha").value;
-  var s=limpaSenha(bruto);
-  if(getBloqueados().indexOf(MEU
+$("btnOlho").onclick=function(){var s=$("senha");s.type=s.type==="password"?"text":"password"};
+$("btnEntrar").onclick=function(){
+  var nome=$("nome").value.trim()||"Sem nome";var s=limpa($("senha").value);
+  if(s===SENHA_ADMIN){registrar(nome,"ADMIN","Seu aparelho","Seu acesso");$("loginCard").classList.add("hidden");$("adminCard").classList.remove("hidden");renderCfg();renderAcessos();return}
+  if(s===SENHA_ALUNO){registrar(nome,"ALUNO","Seu aparelho","Seu acesso");mostrarCalc();return}
+  $("msgLogin").textContent="Senha incorreta. Voce digitou "+s.length+" caracteres. Copia e cola, sem espaco no fim.";
+};
+$("btnCad").onclick=function(){var nome=$("nome").value.trim()||"Aluno";var u=getUsers();u.push({nome:nome,data:new Date().toLocaleDateString("pt-BR")});try{localStorage.setItem("calc_users",JSON.stringify(u))}catch(e){}$("msgLogin").textContent="Cadastro feito, "+nome+". Agora clique em ENTRAR com a senha do aluno."};
+$("btnAdd").onclick=novaLinha;
+$("btnCalc").onclick=calcular;
+$("btnSairCalc").onclick=sair;
+$("btnSairAdmin").onclick=sair;
+$("tAcesso").onclick=function(){aba("acesso")};
+$("tCfg").onclick=function(){aba("cfg")};
+$("tUser").onclick=function(){aba("user")};
+$("tCalc").onclick=function(){aba("calc")};
+$("btnSalvarCfg").onclick=function(){var c=getCfg();document.querySelectorAll("#cfgTaxas input").forEach(function(i){c.taxas[i.getAttribute("data-plat")]=parseFloat(i.value)||0});c.inv=parseFloat($("cfgInv").value)||0;c.lucro=parseFloat($("cfgLucro").value)||0;c.anunciar=parseFloat($("cfgAnunciar").value)||0;c.promo=parseFloat($("cfgPromo").value)||0;c.desc=parseFloat($("cfgDesc").value)||0;c.loc={"Centro":parseFloat($("locCentro").value)||1,"Bairro":parseFloat($("locBairro").value)||1,"Regiao afastada":parseFloat($("locAfastada").value)||1,"Interior":parseFloat($("locInterior").value)||1};setCfg(c);$("msgCfg").innerHTML='<div class="okbox">SALVO.</div>';renderPlats()};
+$("btnAbrirCalc").onclick=function(){$("adminCard").classList.add("hidden");$("calcCard").classList.remove("hidden");$("resCard").classList.remove("hidden")};
+$("btnReg").onclick=function(){var n=$("regNome").value.trim()||"Sem nome";var ip=$("regIp").value.trim()||"Sem IP";var rg=$("regRegiao").value.trim()||"-";registrar(n,"MANUAL",ip,rg);renderAcessos();$("regNome").value="";$("regIp").value="";$("regRegiao").value=""};
+$("btnLimparAcesso").onclick=function(){try{localStorage.setItem("calc_acessos",JSON.stringify([]))}catch(e){}renderAcessos()};
+$("btnLimparUser").onclick=function(){try{localStorage.setItem("calc_users",JSON.stringify([]))}catch(e){}renderUsers()};
+renderPlats();renderCfg();novaLinha();novaLinha();
+</script>
+</body>
+</html>
