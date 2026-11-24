@@ -89,6 +89,9 @@ th{color:#ffd700}
 <div class="cfg"><span>Acrescimo Anunciar (%)</span><input id="cfgAnunciar" type="number" value="28"></div>
 <div class="cfg"><span>Acrescimo Promocao (%)</span><input id="cfgPromo" type="number" value="18"></div>
 <div class="cfg"><span>Desconto promocao (%)</span><input id="cfgDesc" type="number" value="15"></div>
+<label>Senhas de acesso</label>
+<div class="cfg"><span>Senha aluno</span><input id="cfgSenhaAluno" type="text" value="METODO1507"></div>
+<div class="cfg"><span>Senha admin</span><input id="cfgSenhaAdmin" type="text" value="IB208425173251204090326"></div>
 <label>Localidade</label>
 <div class="cfg"><span>Centro</span><input id="locCentro" type="number" step="0.01" value="1.15"></div>
 <div class="cfg"><span>Bairro</span><input id="locBairro" type="number" step="0.01" value="1.05"></div>
@@ -132,8 +135,8 @@ th{color:#ffd700}
 <script>
 var PLATS=["iFood","99Food","Keeta","Happy","Mercado Livre","Shopee","Elo7","Shein","Balcao"];
 var PADRAO={taxas:{"iFood":27,"99Food":27,"Keeta":20,"Happy":18,"Mercado Livre":16,"Shopee":20,"Elo7":15,"Shein":18,"Balcao":0},inv:18,lucro:25,anunciar:28,promo:18,desc:15,loc:{"Centro":1.15,"Bairro":1.05,"Regiao afastada":1.10,"Interior":1.00}};
-var SENHA_ADMIN="IB208425173251204090326";
-var SENHA_ALUNO="METODO1507";
+var SENHA_ADMIN=(function(){try{return localStorage.getItem("calc_senha_admin")||"IB208425173251204090326"}catch(e){return "IB208425173251204090326"}})();
+var SENHA_ALUNO=(function(){try{return localStorage.getItem("calc_senha_aluno")||"METODO1507"}catch(e){return "METODO1507"}})();
 var sel="iFood";
 function $(id){return document.getElementById(id)}
 function limpa(s){return String(s||"").trim().replace(/\s/g,"").replace(/^@/,"")}
@@ -187,7 +190,7 @@ $("tAcesso").onclick=function(){aba("acesso")};
 $("tCfg").onclick=function(){aba("cfg")};
 $("tUser").onclick=function(){aba("user")};
 $("tCalc").onclick=function(){aba("calc")};
-$("btnSalvarCfg").onclick=function(){var c=getCfg();document.querySelectorAll("#cfgTaxas input").forEach(function(i){c.taxas[i.getAttribute("data-plat")]=parseFloat(i.value)||0});c.inv=parseFloat($("cfgInv").value)||0;c.lucro=parseFloat($("cfgLucro").value)||0;c.anunciar=parseFloat($("cfgAnunciar").value)||0;c.promo=parseFloat($("cfgPromo").value)||0;c.desc=parseFloat($("cfgDesc").value)||0;c.loc={"Centro":parseFloat($("locCentro").value)||1,"Bairro":parseFloat($("locBairro").value)||1,"Regiao afastada":parseFloat($("locAfastada").value)||1,"Interior":parseFloat($("locInterior").value)||1};setCfg(c);$("msgCfg").innerHTML='<div class="okbox">SALVO.</div>';renderPlats()};
+$("btnSalvarCfg").onclick=function(){var c=getCfg();document.querySelectorAll("#cfgTaxas input").forEach(function(i){c.taxas[i.getAttribute("data-plat")]=parseFloat(i.value)||0});c.inv=parseFloat($("cfgInv").value)||0;c.lucro=parseFloat($("cfgLucro").value)||0;c.anunciar=parseFloat($("cfgAnunciar").value)||0;c.promo=parseFloat($("cfgPromo").value)||0;c.desc=parseFloat($("cfgDesc").value)||0;... c.desc ... ; try{localStorage...}catch(e){} ; c.loc={"Centro":... c.loc={"Centro":parseFloat($("locCentro").value)||1,"Bairro":parseFloat($("locBairro").value)||1,"Regiao afastada":parseFloat($("locAfastada").value)||1,"Interior":parseFloat($("locInterior").value)||1};setCfg(c);$("msgCfg").innerHTML='<div class="okbox">SALVO.</div>';renderPlats()};
 $("btnAbrirCalc").onclick=function(){$("adminCard").classList.add("hidden");$("calcCard").classList.remove("hidden");$("resCard").classList.remove("hidden")};
 $("btnReg").onclick=function(){var n=$("regNome").value.trim()||"Sem nome";var ip=$("regIp").value.trim()||"Sem IP";var rg=$("regRegiao").value.trim()||"-";registrar(n,"MANUAL",ip,rg);renderAcessos();$("regNome").value="";$("regIp").value="";$("regRegiao").value=""};
 $("btnLimparAcesso").onclick=function(){try{localStorage.setItem("calc_acessos",JSON.stringify([]))}catch(e){}renderAcessos()};
