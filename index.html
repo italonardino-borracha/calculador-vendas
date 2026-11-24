@@ -1,85 +1,97 @@
-<!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CALCULADOR DE VENDAS</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0b0f0a;color:#fff;font-family:Arial,sans-serif}
-.wrap{max-width:720px;margin:0 auto;padding:18px}
-.card{background:#151a12;border:1px solid #2b331f;border-radius:18px;padding:18px;margin:14px 0}
-h1{color:#ffd700;text-align:center;margin:6px 0 2px;font-size:30px;letter-spacing:1px}
-.by{text-align:center;margin:0 0 14px}.by a{color:#b6ff2e;font-weight:bold;text-decoration:none}
-label{display:block;margin:12px 0 4px;color:#e8e8c8;font-size:14px}
-input,select{width:100%;padding:13px;border-radius:12px;border:1px solid #3a4426;background:#0e120b;color:#fff;font-size:16px}
-.row{display:flex;gap:8px}.row>*{flex:1}
-button{width:100%;padding:14px;border:0;border-radius:14px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:12px}
-.gold{background:#ffd700;color:#111}.lime{background:#b6ff2e;color:#111}.dark{background:#262b1e;color:#fff}
-.eye{width:52px;background:#262b1e;color:#fff}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.chip{padding:9px 12px;border-radius:999px;border:1px solid #444;background:#1c2115;cursor:pointer;font-size:14px}.chip.on{background:#ffd700;color:#111;border-color:#ffd700}
-.ins{display:flex;gap:6px;margin-top:8px}.ins input{padding:10px}.x{width:44px;background:#7a1f1f;color:#fff;border:0;border-radius:10px}
-.res{display:grid;grid-template-columns:1fr;gap:12px}.box{background:#ffd700;color:#111;border-radius:16px;padding:16px;text-align:center}.box b{display:block;font-size:22px}.box span{font-size:28px;font-weight:bold}
-.small{color:#cfd6a8;font-size:13px;text-align:center}.hidden{display:none}
-</style></head>
-<body><div class="wrap">
-<h1>CALCULADOR DE VENDAS</h1><p class="by">by <a href="https://www.instagram.com/italoborracha" target="_blank" rel="noopener">@italoborracha_fireworks</a></p>
-
-<div id="login" class="card">
-<label>Digite sua senha</label><div class="row"><input id="senha" type="password" placeholder="Digite sua senha"><button class="eye" id="olho1" type="button">Olho</button></div>
-<button class="gold" id="entrar" type="button">ENTRAR</button>
-<button class="dark" id="irCadastro" type="button">FAZER CADASTRO</button>
-<p class="small" id="msgLogin"></p></div>
-
-<div id="cadastro" class="card hidden">
-<label>Foto</label><input type="file" accept="image/*">
-<label>Nome completo</label><input id="cNome">
-<label>WhatsApp</label><input id="cZap" placeholder="(00) 00000-0000">
-<label>MEI / CNPJ / CPF</label><input id="cDoc">
-<label>Ramo</label><input id="cRamo">
-<label>Senha</label><div class="row"><input id="cSenha" type="password"><button class="eye" id="olho2" type="button">Olho</button></div>
-<label>Confirmar senha</label><div class="row"><input id="cSenha2" type="password"><button class="eye" id="olho3" type="button">Olho</button></div>
-<button class="lime" id="salvarCad" type="button">SALVAR E VOLTAR</button>
-<button class="dark" id="voltarLogin" type="button">VOLTAR</button><p class="small" id="msgCad"></p></div>
-
-<div id="admin" class="card hidden"><h2 style="text-align:center">PAINEL ADMIN</h2><p class="small">Acesso restrito.</p><button class="dark" id="sairAdmin" type="button">SAIR</button></div>
-
-<div id="calc" class="hidden">
-<div class="card"><p style="margin:0"><b>IA GERENTE CALCULADOR</b><br><span class="small">Me fala o produto e os insumos. Eu pergunto o que faltar.</span></p>
-<label>O que voce vende? Nome + tamanho / peso / area / tempo</label><input id="produto" placeholder="Digite aqui">
-<label>Localidade</label><select id="local"><option>Centro</option><option>Bairro nobre</option><option>Bairro</option><option>Vila</option><option>Regiao afastada</option><option>Comunidade</option><option>Outros</option></select>
-<label>Quais insumos / materiais acompanham?</label><div id="lista"></div>
-<button class="dark" id="add" type="button">+ ADICIONAR INSUMO</button>
-<p class="small">Para cada insumo: Nome + Quantidade comprada + Valor total pago. Eu calculo quanto custa em 1 unidade. 1 sacola, 1 caixa, 1 lacre por unidade. 1 pedaco de fita / film. 250g usa 250g, nao 1kg.</p>
-<label>Plataforma</label><div class="chips" id="plats"></div>
-<button class="gold" id="calcular" type="button">CALCULAR</button>
-<button class="dark" id="sair" type="button">SAIR</button></div>
-<div class="card"><div class="res">
-<div class="box"><b>PRECO SUGERIDO</b><span id="r1">R$ 0,00</span></div>
-<div class="box"><b>PRECO PARA ANUNCIAR</b><span id="r2">R$ 0,00</span></div>
-<div class="box"><b>PRECO COM MARGEM PARA PROMOCAO</b><span id="r3">R$ 0,00</span><br><span id="rPct" style="font-size:16px"></span></div>
-</div></div></div></div>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#0f0f0f;color:#fff;min-height:100vh;padding:18px 12px 40px}
+.top{text-align:center;margin-bottom:16px}
+.top h1{font-size:28px;letter-spacing:1px}
+.top a{color:#ffd700;text-decoration:none;font-weight:bold;font-size:15px}
+.card{background:#1c1c1c;border-radius:16px;padding:16px;max-width:900px;margin:0 auto 14px}
+h2{font-size:17px;margin-bottom:6px}
+.sub{color:#ccc;font-size:13px;margin-bottom:12px}
+label{display:block;font-size:14px;font-weight:bold;margin:12px 0 6px}
+input,select{width:100%;background:#2a2a2a;border:1px solid #444;color:#fff;border-radius:10px;padding:12px;font-size:15px;outline:none}
+input::placeholder{color:#888}
+.row{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 38px;gap:8px;align-items:center;margin-bottom:8px}
+.row input{padding:11px 9px;font-size:14px}
+.x{background:#e11d48;border:0;color:#fff;border-radius:10px;height:42px;font-weight:bold;cursor:pointer}
+.add{width:100%;background:#333;border:0;color:#fff;border-radius:10px;padding:12px;font-weight:bold;cursor:pointer;margin-top:4px}
+.hint{color:#ffd700;font-size:12px;margin-top:10px;line-height:1.5}
+.plats{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.plats button{background:#2a2a2a;border:1px solid #444;color:#fff;border-radius:20px;padding:9px 13px;cursor:pointer;font-size:14px}
+.plats button.on{background:#ffd700;color:#000;border-color:#ffd700;font-weight:bold}
+.calc{width:100%;background:#ffd700;border:0;border-radius:12px;padding:15px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:14px;color:#000}
+.sair{width:100%;background:#333;border:0;border-radius:12px;padding:12px;font-weight:bold;cursor:pointer;margin-top:8px;color:#fff}
+.res{background:#ffd700;color:#000;border-radius:14px;padding:16px;text-align:center;margin-bottom:10px}
+.res b{display:block;font-size:16px}
+.res span{font-size:22px;font-weight:bold}
+.res small{display:block;font-size:13px;margin-top:4px;font-weight:bold}
+.eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:0;font-size:18px;cursor:pointer}
+.wrap{position:relative}
+.hidden{display:none}
+.ok{color:#7CFC00;font-size:13px;margin-top:8px}
+@media(max-width:640px){.row{grid-template-columns:1fr 1fr}.row .x{grid-column:span 2}}
+</style>
+</head>
+<body>
+<div class="top"><h1>CALCULADOR DE VENDAS</h1><a href="https://www.instagram.com/italoborracha_fireworks" target="_blank">by @italoborracha_fireworks</a></div>
+<div class="card" id="loginCard">
+<h2>Acesso</h2><div class="sub">Faça login ou crie sua conta para continuar.</div>
+<label>Nome</label><input id="nome" placeholder="Seu nome">
+<label>Senha</label><div class="wrap"><input id="senha" type="password" placeholder="Senha"><button class="eye" onclick="verSenha()">👁️</button></div>
+<button class="calc" onclick="entrar()">ENTRAR</button>
+<button class="add" onclick="cadastrar()">CADASTRAR</button>
+<div class="ok" id="msgLogin"></div>
+</div>
+<div class="card hidden" id="calcCard">
+<h2>IA GERENTE CALCULADOR</h2><div class="sub">Me fala o produto e os insumos. Eu pergunto o que faltar.</div>
+<label>O que você vende? Nome + tamanho / peso / área / tempo</label>
+<input id="produto" placeholder="Digite aqui">
+<label>Localidade</label>
+<select id="local"><option>Centro</option><option>Bairro</option><option>Região afastada</option><option>Interior</option></select>
+<label>Quais insumos / materiais acompanham?</label>
+<div id="lista"></div>
+<button class="add" onclick="novaLinha()">+ ADICIONAR INSUMO</button>
+<div class="hint">Para cada insumo: Nome + Quantidade comprada + Valor total pago + Quanto usa em 1 unidade. Ex: Carne - 1kg - 50,30 - 250g. Sacola - 1000 - 27,00 - 1. O app calcula quanto custa em 1 unidade. 1 sacola, 1 caixa, 1 lacre por unidade. 250g usa 250g, não 1kg.</div>
+<label>Plataforma</label>
+<div class="plats" id="plats"></div>
+<button class="calc" onclick="calcular()">CALCULAR</button>
+<button class="sair" onclick="sair()">SAIR</button>
+</div>
+<div class="card hidden" id="resCard">
+<div class="res"><b>PREÇO SUGERIDO</b><span id="r1">R$ 0,00</span></div>
+<div class="res"><b>PREÇO PARA ANUNCIAR</b><span id="r2">R$ 0,00</span></div>
+<div class="res"><b>PREÇO COM MARGEM PARA PROMOÇÃO</b><span id="r3">R$ 0,00</span><small id="rPct"></small></div>
+</div>
 <script>
-function $(id){return document.getElementById(id)}
-function olho(btn,input){btn.addEventListener('click',function(){input.type=input.type==='password'?'text':'password'})}
-olho($('olho1'),$('senha'));olho($('olho2'),$('cSenha'));olho($('olho3'),$('cSenha2'));
-function show(id){['login','cadastro','admin','calc'].forEach(function(x){$(x).classList.add('hidden')});$(id).classList.remove('hidden')}
-$('irCadastro').addEventListener('click',function(){show('cadastro')});
-$('voltarLogin').addEventListener('click',function(){show('login')});
-$('sair').addEventListener('click',function(){$('senha').value='';show('login')});
-$('sairAdmin').addEventListener('click',function(){$('senha').value='';show('login')});
-function entrar(){var s=$('senha').value.trim();if(s==='METODO1507'){show('calc');$('msgLogin').textContent=''}else if(s==='@IB208425173251204090326'){show('admin');$('msgLogin').textContent=''}else{$('msgLogin').textContent='Senha incorreta. Confira e tente de novo.'}}
-$('entrar').addEventListener('click',entrar);$('senha').addEventListener('keydown',function(e){if(e.key==='Enter')entrar()});
-$('salvarCad').addEventListener('click',function(){if(!$('cNome').value||!$('cZap').value||!$('cDoc').value||!$('cRamo').value||!$('cSenha').value){$('msgCad').textContent='Preencha todos os campos.';return}if($('cSenha').value!==$('cSenha2').value){$('msgCad').textContent='Senhas diferentes.';return}$('msgCad').textContent='Cadastro salvo. Volte e entre com sua senha.';setTimeout(function(){show('login')},900)});
-var plats=['iFood','99Food','Keeta','Happy','Mercado Livre','Shopee','Elo7','Shein','Balcao'];var sel='Balcao';
-var taxas={iFood:0.27,'99Food':0.22,Keeta:0.20,Happy:0.18,'Mercado Livre':0.16,Shopee:0.14,Elo7:0.12,Shein:0.15,Balcao:0};
-plats.forEach(function(p){var d=document.createElement('div');d.className='chip'+(p===sel?' on':'');d.textContent=p;d.addEventListener('click',function(){sel=p;document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on')});d.classList.add('on')});$('plats').appendChild(d)});
-function novaLinha(){var d=document.createElement('div');d.className='ins';d.innerHTML='<input placeholder="Nome do insumo"><input placeholder="Qtd comprada" inputmode="decimal"><input placeholder="Valor pago" inputmode="decimal"><button class="x" type="button">X</button>';d.querySelector('.x').addEventListener('click',function(){d.remove()});$('lista').appendChild(d)}
-novaLinha();novaLinha();$('add').addEventListener('click',novaLinha);
-function num(v){if(!v)return 0;v=String(v).replace('R$','').trim().replace(/\./g,'').replace(',','.');var n=parseFloat(v);return isNaN(n)?0:n}
-function uso(nome,qtd){var m=String(nome).toLowerCase().match(/(\d+(?:[.,]\d+)?)\s*(g|kg|ml|l|un|unidade|unidades)/);if(m){var v=parseFloat(m[1].replace(',','.'));if(m[2]==='kg')return v*1000;if(m[2]==='l')return v*1000;return v}return 1}
-$('calcular').addEventListener('click',function(){
-var custo=0;document.querySelectorAll('#lista .ins').forEach(function(l){var ins=l.querySelectorAll('input');var nome=ins[0].value;var q=num(ins[1].value);var val=num(ins[2].value);if(!q||!val)return;var u=uso(nome,q);var base=q;if(/kg/.test(nome.toLowerCase()))base=q*1000;custo+=(val/base)*u;});
-if(custo<=0){$('r1').textContent='R$ 0,00';$('r2').textContent='R$ 0,00';$('r3').textContent='R$ 0,00';$('rPct').textContent='Preencha pelo menos um valor.';return}
-var loc={Centro:1.15,'Bairro nobre':1.18,Bairro:1.0,Vila:0.95,'Regiao afastada':0.92,Comunidade:0.90,Outros:1.0}[$('local').value]||1;
-var invis=custo*0.18;var base2=(custo+invis)*loc;var taxa=taxas[sel]||0;var sugerido=base2*(1+0.32);var anunciar=sugerido/(1-taxa);var promo=anunciar/0.85;
-function fmt(v){return 'R$ '+v.toFixed(2).replace('.',',')}
-$('r1').textContent=fmt(sugerido);$('r2').textContent=fmt(anunciar);$('r3').textContent=fmt(promo);$('rPct').textContent='Aplique 15% de desconto';
-});
-</script></body></html>
+var PLATS=[" iFood","99Food","Keeta","Happy"," Mercado Livre"," Shopee"," Elo7"," Shein","Balcão"];
+var TAXAS={" iFood":0.27,"99Food":0.27,"Keeta":0.20,"Happy":0.18," Mercado Livre":0.16," Shopee":0.20," Elo7":0.15," Shein":0.18,"Balcão":0};
+var sel=" iFood";
+var plats=document.getElementById("plats");
+PLATS.forEach(function(p){var b=document.createElement("button");b.textContent=p;if(p===sel)b.className="on";b.onclick=function(){sel=p;document.querySelectorAll("#plats button").forEach(function(x){x.className=""});b.className="on"};plats.appendChild(b)});
+function verSenha(){var s=document.getElementById("senha");s.type=s.type==="password"?"text":"password"}
+function entrar(){var s=document.getElementById("senha").value;if(s==="METODO1507"){mostrarCalc();return}if(s==="@IB208425173251204090326"){document.getElementById("msgLogin").textContent="Painel admin - em breve";return}document.getElementById("msgLogin").textContent="Senha incorreta. Use letra maiúscula."}
+function cadastrar(){document.getElementById("msgLogin").textContent="Cadastro feito. Agora clique em ENTRAR com a senha METODO1507."}
+function mostrarCalc(){document.getElementById("loginCard").classList.add("hidden");document.getElementById("calcCard").classList.remove("hidden");document.getElementById("resCard").classList.remove("hidden")}
+function sair(){document.getElementById("calcCard").classList.add("hidden");document.getElementById("resCard").classList.add("hidden");document.getElementById("loginCard").classList.remove("hidden")}
+function novaLinha(n,q,v,u){var d=document.createElement("div");d.className="row";d.innerHTML='<input placeholder="Nome do insumo" value="'+(n||"")+'"><input placeholder="Qtd comprada" value="'+(q||"")+'"><input placeholder="Valor pago" value="'+(v||"")+'"><input placeholder="Usa em 1 un." value="'+(u||"")+'"><button class="x" onclick="this.parentElement.remove()">X</button>';document.getElementById("lista").appendChild(d)}
+novaLinha();novaLinha();
+function num(v){if(!v)return 0;v=String(v).trim().replace(/\s/g,"");if(v.indexOf(",")>-1){v=v.replace(/\./g,"").replace(",",".")}return parseFloat(v)||0}
+function qtdBase(txt){if(!txt)return 0;var s=String(txt).toLowerCase().replace(/\s/g,"").replace(",",".");var n=parseFloat(s)||0;if(s.indexOf("kg")>-1)return n*1000;if(s.indexOf("g")>-1)return n;if(s.indexOf("l")>-1)return n*1000;if(s.indexOf("ml")>-1)return n;return n}
+function usaBase(txt){if(!txt||!String(txt).trim())return 1;var s=String(txt).toLowerCase().replace(/\s/g,"").replace(",",".");var n=parseFloat(s)||0;if(s.indexOf("kg")>-1)return n*1000;if(s.indexOf("g")>-1)return n;if(s.indexOf("l")>-1)return n*1000;if(s.indexOf("ml")>-1)return n;return n||1}
+function fmt(v){return "R$ "+v.toFixed(2).replace(".",",")}
+function calcular(){
+  var rows=document.querySelectorAll("#lista .row");var soma=0;
+  rows.forEach(function(r){var ins=r.querySelectorAll("input");var nome=ins[0].value,qtdTxt=ins[1].value,val=num(ins[2].value),usaTxt=ins[3].value;if(!nome||!qtdTxt||!val)return;var q=qtdBase(qtdTxt);if(q<=0)return;var usa=usaBase(usaTxt);var custo=(val/q)*usa;soma+=custo});
+  if(soma<=0){document.getElementById("r1").textContent="R$ 0,00";document.getElementById("r2").textContent="R$ 0,00";document.getElementById("r3").textContent="R$ 0,00";document.getElementById("rPct").textContent="Preencha pelo menos um valor.";return}
+  var locF={"Centro":1.15,"Bairro":1.05,"Região afastada":1.10,"Interior":1.0}[document.getElementById("local").value]||1;
+  var custo=soma*1.18*locF;var taxa=TAXAS[sel]||0;var sugerido=custo/(1-taxa);sugerido=sugerido*1.25;var anunciar=sugerido*1.28;var promo=anunciar*1.18;
+  document.getElementById("r1").textContent=fmt(sugerido);document.getElementById("r2").textContent=fmt(anunciar);document.getElementById("r3").textContent=fmt(promo);document.getElementById("rPct").textContent="Aplique 15% de desconto";
+}
+</script>
+</body>
+</html>
