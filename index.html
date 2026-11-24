@@ -23,6 +23,7 @@ input::placeholder{color:#888}
 .hint{color:#ffd700;font-size:12px;margin-top:10px;line-height:1.5}
 .erro{background:#e11d48;color:#fff;border-radius:12px;padding:14px;font-weight:bold;font-size:14px;line-height:1.5;margin-top:12px}
 .erro small{display:block;font-weight:normal;margin-top:4px}
+.okbox{background:#1a5c1a;color:#fff;border-radius:12px;padding:12px;font-weight:bold;font-size:14px;margin-top:12px}
 .plats{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
 .plats button{background:#2a2a2a;border:1px solid #444;color:#fff;border-radius:20px;padding:9px 13px;cursor:pointer;font-size:14px}
 .plats button.on{background:#ffd700;color:#000;border-color:#ffd700;font-weight:bold}
@@ -36,11 +37,21 @@ input::placeholder{color:#888}
 .wrap{position:relative}
 .hidden{display:none}
 .ok{color:#7CFC00;font-size:13px;margin-top:8px}
-@media(max-width:640px){.row{grid-template-columns:1fr 1fr}.row .x{grid-column:span 2}}
+.tabs{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.tabs button{background:#2a2a2a;border:1px solid #444;color:#fff;border-radius:20px;padding:9px 14px;cursor:pointer}
+.tabs button.on{background:#ffd700;color:#000;font-weight:bold}
+.cfg{display:grid;grid-template-columns:1fr 110px;gap:8px;align-items:center;margin-bottom:8px}
+.cfg span{font-size:14px}
+.cfg input{text-align:right}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border-bottom:1px solid #333;padding:10px 6px;text-align:left}
+th{color:#ffd700}
+@media(max-width:640px){.row{grid-template-columns:1fr 1fr}.row .x{grid-column:span 2}.cfg{grid-template-columns:1fr 90px}}
 </style>
 </head>
 <body>
 <div class="top"><h1>CALCULADOR DE VENDAS</h1><a href="https://www.instagram.com/italoborracha_fireworks" target="_blank">by @italoborracha_fireworks</a></div>
+
 <div class="card" id="loginCard">
 <h2>Acesso</h2><div class="sub">Faça login ou crie sua conta para continuar.</div>
 <label>Nome</label><input id="nome" placeholder="Seu nome">
@@ -49,6 +60,47 @@ input::placeholder{color:#888}
 <button class="add" onclick="cadastrar()">CADASTRAR</button>
 <div class="ok" id="msgLogin"></div>
 </div>
+
+<!-- PAINEL ADMIN 100% -->
+<div class="card hidden" id="adminCard">
+<h2>PAINEL ADMIN</h2><div class="sub">Controle total do app. O que você mudar aqui vale para todos os usuários.</div>
+<div class="tabs"><button id="tabCfg" class="on" onclick="aba('cfg')">Configurações</button><button id="tabUser" onclick="aba('user')">Usuários</button><button id="tabCalc" onclick="aba('calc')">Testar Calculador</button></div>
+
+<div id="paneCfg">
+<label>Taxas das plataformas (%)</label>
+<div id="cfgTaxas"></div>
+<label>Custos e margens</label>
+<div class="cfg"><span>Custo invisível (%)</span><input id="cfgInv" type="number" value="18"></div>
+<div class="cfg"><span>Lucro sobre custo (%) - Sugerido</span><input id="cfgLucro" type="number" value="25"></div>
+<div class="cfg"><span>Acréscimo Anunciar (%)</span><input id="cfgAnunciar" type="number" value="28"></div>
+<div class="cfg"><span>Acréscimo Promoção (%)</span><input id="cfgPromo" type="number" value="18"></div>
+<div class="cfg"><span>Desconto a aplicar na promoção (%)</span><input id="cfgDesc" type="number" value="15"></div>
+<label>Localidade (fator)</label>
+<div class="cfg"><span>Centro</span><input id="locCentro" type="number" step="0.01" value="1.15"></div>
+<div class="cfg"><span>Bairro</span><input id="locBairro" type="number" step="0.01" value="1.05"></div>
+<div class="cfg"><span>Região afastada</span><input id="locAfastada" type="number" step="0.01" value="1.10"></div>
+<div class="cfg"><span>Interior</span><input id="locInterior" type="number" step="0.01" value="1.00"></div>
+<button class="calc" onclick="salvarCfg()">SALVAR CONFIGURAÇÕES</button>
+<div id="msgCfg"></div>
+<button class="add" onclick="restaurarCfg()">RESTAURAR PADRÃO</button>
+</div>
+
+<div id="paneUser" class="hidden">
+<div class="sub">Usuários cadastrados neste navegador.</div>
+<table><thead><tr><th>Nome</th><th>Data</th><th></th></tr></thead><tbody id="tbodyUser"></tbody></table>
+<div class="sub" id="semUser">Nenhum usuário ainda.</div>
+<button class="add" onclick="limparUsuarios()">LIMPAR USUÁRIOS</button>
+</div>
+
+<div id="paneCalc" class="hidden">
+<div class="sub">Teste o calculador como aluno, usando as configurações salvas acima.</div>
+<button class="calc" onclick="abrirCalcDoAdmin()">ABRIR CALCULADOR</button>
+</div>
+
+<button class="sair" onclick="sair()">SAIR</button>
+</div>
+
+<!-- CALCULADOR -->
 <div class="card hidden" id="calcCard">
 <h2>IA GERENTE CALCULADOR</h2><div class="sub">Me fala o produto e os insumos. Eu pergunto o que faltar.</div>
 <label>O que você vende? Nome + tamanho / peso / área / tempo</label>
@@ -65,47 +117,55 @@ input::placeholder{color:#888}
 <button class="calc" onclick="calcular()">CALCULAR</button>
 <button class="sair" onclick="sair()">SAIR</button>
 </div>
+
 <div class="card hidden" id="resCard">
 <div class="res"><b>PREÇO SUGERIDO</b><span id="r1">R$ 0,00</span></div>
 <div class="res"><b>PREÇO PARA ANUNCIAR</b><span id="r2">R$ 0,00</span></div>
 <div class="res"><b>PREÇO COM MARGEM PARA PROMOÇÃO</b><span id="r3">R$ 0,00</span><small id="rPct"></small></div>
 </div>
+
 <script>
-var PLATS=[" iFood","99Food","Keeta","Happy"," Mercado Livre"," Shopee"," Elo7"," Shein","Balcão"];
-var TAXAS={" iFood":0.27,"99Food":0.27,"Keeta":0.20,"Happy":0.18," Mercado Livre":0.16," Shopee":0.20," Elo7":0.15," Shein":0.18,"Balcão":0};
-var sel=" iFood";
-var plats=document.getElementById("plats");
-PLATS.forEach(function(p){var b=document.createElement("button");b.textContent=p;if(p===sel)b.className="on";b.onclick=function(){sel=p;document.querySelectorAll("#plats button").forEach(function(x){x.className=""});b.className="on"};plats.appendChild(b)});
-function verSenha(){var s=document.getElementById("senha");s.type=s.type==="password"?"text":"password"}
-function entrar(){var s=document.getElementById("senha").value;if(s==="METODO1507"){mostrarCalc();return}if(s==="@IB208425173251204090326"){document.getElementById("msgLogin").textContent="Painel admin - em breve";return}document.getElementById("msgLogin").textContent="Senha incorreta. Use letra maiúscula."}
-function cadastrar(){document.getElementById("msgLogin").textContent="Cadastro feito. Agora clique em ENTRAR com a senha METODO1507."}
-function mostrarCalc(){document.getElementById("loginCard").classList.add("hidden");document.getElementById("calcCard").classList.remove("hidden");document.getElementById("resCard").classList.remove("hidden")}
-function sair(){document.getElementById("calcCard").classList.add("hidden");document.getElementById("resCard").classList.add("hidden");document.getElementById("loginCard").classList.remove("hidden")}
-function novaLinha(n,q,v,u){var d=document.createElement("div");d.className="row";d.innerHTML='<input placeholder="Nome do insumo" value="'+(n||"")+'"><input placeholder="Qtd comprada" value="'+(q||"")+'"><input placeholder="Valor pago" value="'+(v||"")+'"><input placeholder="Usa em 1 un." value="'+(u||"")+'"><button class="x" onclick="this.parentElement.remove()">X</button>';document.getElementById("lista").appendChild(d)}
-novaLinha();novaLinha();
-function num(v){if(!v)return 0;v=String(v).trim().replace(/\s/g,"");if(v.indexOf(",")>-1){v=v.replace(/\./g,"").replace(",",".")}return parseFloat(v)||0}
-function qtdBase(txt){if(!txt)return 0;var s=String(txt).toLowerCase().replace(/\s/g,"").replace(",",".");var n=parseFloat(s)||0;if(s.indexOf("kg")>-1)return n*1000;if(s.indexOf("g")>-1)return n;if(s.indexOf("l")>-1)return n*1000;if(s.indexOf("ml")>-1)return n;return n}
-function usaBase(txt){if(!txt||!String(txt).trim())return 1;var s=String(txt).toLowerCase().replace(/\s/g,"").replace(",",".");var n=parseFloat(s)||0;if(s.indexOf("kg")>-1)return n*1000;if(s.indexOf("g")>-1)return n;if(s.indexOf("l")>-1)return n*1000;if(s.indexOf("ml")>-1)return n;return n||1}
-function isPeso(txt){var s=String(txt||"").toLowerCase();return s.indexOf("kg")>-1||s.indexOf("g")>-1||s.indexOf("ml")>-1||s.indexOf("l")>-1}
-function pesoProduto(txt){var m=String(txt||"").toLowerCase().replace(",",".").match(/(\d+(?:\.\d+)?)\s*(kg|g|ml|l)\b/);if(!m)return 0;var n=parseFloat(m[1]);if(m[2]==="kg")return n*1000;if(m[2]==="g")return n;if(m[2]==="l")return n*1000;if(m[2]==="ml")return n;return 0}
-function fmt(v){return "R$ "+v.toFixed(2).replace(".",",")}
-function mostrarErro(msg){var a=document.getElementById("alerta");a.classList.remove("hidden");a.innerHTML=msg;document.getElementById("r1").textContent="R$ 0,00";document.getElementById("r2").textContent="R$ 0,00";document.getElementById("r3").textContent="R$ 0,00";document.getElementById("rPct").textContent=""}
-function limparErro(){document.getElementById("alerta").classList.add("hidden")}
-function calcular(){
-  limparErro();
-  var rows=document.querySelectorAll("#lista .row");var soma=0;var somaPeso=0;var temPeso=false;
-  rows.forEach(function(r){var ins=r.querySelectorAll("input");var nome=ins[0].value,qtdTxt=ins[1].value,val=num(ins[2].value),usaTxt=ins[3].value;if(!nome||!qtdTxt||!val)return;var q=qtdBase(qtdTxt);if(q<=0)return;var usa=usaBase(usaTxt);var custo=(val/q)*usa;soma+=custo;if(isPeso(usaTxt)){somaPeso+=usa;temPeso=true}});
-  if(soma<=0){mostrarErro("Preencha pelo menos um insumo com valor.");return}
-  var prod=document.getElementById("produto").value;
-  var pesoProd=pesoProduto(prod);
-  if(pesoProd>0&&temPeso){
-    if(somaPeso>pesoProd){mostrarErro("PESO ERRADO - NÃO CALCULEI.<small>Você escreveu "+prod.toUpperCase()+", mas colocou "+somaPeso+"g de insumos com peso. Está "+(somaPeso-pesoProd)+"g a mais. Ajuste o Usa em 1 un. antes de calcular.</small>");return}
-    if(somaPeso<pesoProd*0.5){mostrarErro("FALTA PESO - CONFERE?<small>Você escreveu "+prod.toUpperCase()+", mas colocou só "+somaPeso+"g de insumos com peso. Faltam "+(pesoProd-somaPeso)+"g. Você esqueceu algum insumo?</small>");return}
-  }
-  var locF={"Centro":1.15,"Bairro":1.05,"Região afastada":1.10,"Interior":1.0}[document.getElementById("local").value]||1;
-  var custo=soma*1.18*locF;var taxa=TAXAS[sel]||0;var sugerido=custo/(1-taxa);sugerido=sugerido*1.25;var anunciar=sugerido*1.28;var promo=anunciar*1.18;
-  document.getElementById("r1").textContent=fmt(sugerido);document.getElementById("r2").textContent=fmt(anunciar);document.getElementById("r3").textContent=fmt(promo);document.getElementById("rPct").textContent="Aplique 15% de desconto";
+var PLATS=[" 【entity-iFood¦canonical_name=iFood】","99Food","Keeta","Happy"," 【entity-Mercado Livre¦canonical_name=Mercado Livre】"," 【entity-Shopee¦canonical_name=Shopee】"," 【entity-Elo7¦canonical_name=Elo7】"," 【entity-Shein¦canonical_name=Shein】","Balcão"];
+var PADRAO={taxas:{" 【entity-iFood¦canonical_name=iFood】":27,"99Food":27,"Keeta":20,"Happy":18," 【entity-Mercado Livre¦canonical_name=Mercado Livre】":16," 【entity-Shopee¦canonical_name=Shopee】":20," 【entity-Elo7¦canonical_name=Elo7】":15," 【entity-Shein¦canonical_name=Shein】":18,"Balcão":0},inv:18,lucro:25,anunciar:28,promo:18,desc:15,loc:{"Centro":1.15,"Bairro":1.05,"Região afastada":1.10,"Interior":1.00}};
+function getCfg(){try{var c=JSON.parse(localStorage.getItem("calc_cfg"));if(c&&c.taxas)return c}catch(e){}return JSON.parse(JSON.stringify(PADRAO))}
+function setCfg(c){localStorage.setItem("calc_cfg",JSON.stringify(c))}
+function renderCfg(){
+  var c=getCfg();var box=document.getElementById("cfgTaxas");box.innerHTML="";
+  PLATS.forEach(function(p){var d=document.createElement("div");d.className="cfg";d.innerHTML="<span>"+p+" (%)</span><input type='number' data-plat='"+p+"' value='"+(c.taxas[p]||0)+"'>";box.appendChild(d)});
+  document.getElementById("cfgInv").value=c.inv;document.getElementById("cfgLucro").value=c.lucro;document.getElementById("cfgAnunciar").value=c.anunciar;document.getElementById("cfgPromo").value=c.promo;document.getElementById("cfgDesc").value=c.desc;
+  document.getElementById("locCentro").value=c.loc["Centro"];document.getElementById("locBairro").value=c.loc["Bairro"];document.getElementById("locAfastada").value=c.loc["Região afastada"];document.getElementById("locInterior").value=c.loc["Interior"];
 }
-</script>
-</body>
-</html>
+function salvarCfg(){
+  var c=getCfg();document.querySelectorAll("#cfgTaxas input").forEach(function(i){c.taxas[i.getAttribute("data-plat")]=parseFloat(i.value)||0});
+  c.inv=parseFloat(document.getElementById("cfgInv").value)||0;c.lucro=parseFloat(document.getElementById("cfgLucro").value)||0;c.anunciar=parseFloat(document.getElementById("cfgAnunciar").value)||0;c.promo=parseFloat(document.getElementById("cfgPromo").value)||0;c.desc=parseFloat(document.getElementById("cfgDesc").value)||0;
+  c.loc={"Centro":parseFloat(document.getElementById("locCentro").value)||1,"Bairro":parseFloat(document.getElementById("locBairro").value)||1,"Região afastada":parseFloat(document.getElementById("locAfastada").value)||1,"Interior":parseFloat(document.getElementById("locInterior").value)||1};
+  setCfg(c);document.getElementById("msgCfg").innerHTML='<div class="okbox">SALVO. Já vale para todos os cálculos.</div>';renderPlats();
+}
+function restaurarCfg(){setCfg(JSON.parse(JSON.stringify(PADRAO)));renderCfg();renderPlats();document.getElementById("msgCfg").innerHTML='<div class="okbox">Padrão restaurado.</div>'}
+function aba(q){
+  document.getElementById("paneCfg").classList.toggle("hidden",q!=="cfg");
+  document.getElementById("paneUser").classList.toggle("hidden",q!=="user");
+  document.getElementById("paneCalc").classList.toggle("hidden",q!=="calc");
+  document.getElementById("tabCfg").className=q==="cfg"?"on":"";document.getElementById("tabUser").className=q==="user"?"on":"";document.getElementById("tabCalc").className=q==="calc"?"on":"";
+  if(q==="user")renderUsers();
+}
+function getUsers(){try{return JSON.parse(localStorage.getItem("calc_users")||"[]")}catch(e){return[]}}
+function renderUsers(){var u=getUsers();var tb=document.getElementById("tbodyUser");tb.innerHTML="";document.getElementById("semUser").style.display=u.length?"none":"block";u.forEach(function(x,i){var tr=document.createElement("tr");tr.innerHTML="<td>"+x.nome+"</td><td>"+x.data+"</td><td><button class='x' onclick='remUser("+i+")'>X</button></td>";tb.appendChild(tr)})}
+function remUser(i){var u=getUsers();u.splice(i,1);localStorage.setItem("calc_users",JSON.stringify(u));renderUsers()}
+function limparUsuarios(){localStorage.setItem("calc_users",JSON.stringify([]));renderUsers()}
+function abrirCalcDoAdmin(){document.getElementById("adminCard").classList.add("hidden");document.getElementById("calcCard").classList.remove("hidden");document.getElementById("resCard").classList.remove("hidden")}
+var sel=" iFood";
+function renderPlats(){var plats=document.getElementById("plats");plats.innerHTML="";PLATS.forEach(function(p){var b=document.createElement("button");b.textContent=p;if(p===sel)b.className="on";b.onclick=function(){sel=p;document.querySelectorAll("#plats button").forEach(function(x){x.className=""});b.className="on"};plats.appendChild(b)})}
+renderPlats();renderCfg();
+function verSenha(){var s=document.getElementById("senha");s.type=s.type==="password"?"text":"password"}
+function entrar(){
+  var nome=document.getElementById("nome").value.trim();var s=document.getElementById("senha").value;
+  if(s==="@IB208425173251204090326"){document.getElementById("loginCard").classList.add("hidden");document.getElementById("adminCard").classList.remove("hidden");renderCfg();return}
+  if(s==="METODO1507"){mostrarCalc();return}
+  document.getElementById("msgLogin").textContent="Senha incorreta. Use letra maiúscula.";
+}
+function cadastrar(){var nome=document.getElementById("nome").value.trim()||"Aluno";var u=getUsers();u.push({nome:nome,data:new Date().toLocaleDateString("pt-BR")});localStorage.setItem("calc_users",JSON.stringify(u));document.getElementById("msgLogin").textContent="Cadastro feito, "+nome+". Agora clique em ENTRAR com a senha METODO1507."}
+function mostrarCalc(){document.getElementById("loginCard").classList.add("hidden");document.getElementById("adminCard").classList.add("hidden");document.getElementById("calcCard").classList.remove("hidden");document.getElementById("resCard").classList.remove("hidden")}
+function sair(){document.getElementById("calcCard").classList.add("hidden");document.getElementById("resCard").classList.add("hidden");document.getElementById("adminCard").classList.add("hidden");document.getElementById("loginCard").classList.remove("hidden")}
+function novaLinha(n,q,v,u){var d=document.createElement("div");d.className="row";d.innerHTML='<input placeholder="Nome do insumo" value="'+(n||"")+'"><input placeholder="Qtd comprada" value="'+(q||"")+'"><input placeholder="Valor pago" value="'+(v||"")+'"><input placeholder="Usa em 1 un." value="'+(u||"")+'"><button class="x" onclick="this.parentElement.remove()">X</button>';document.getElementById("lista").appendChild(d)}
+novaLinha
