@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CALCULADOR DE VENDAS</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b0f0a;color:#fff;font-family:Arial,sans-serif}
+.wrap{max-width:720px;margin:0 auto;padding:18px}
+.card{background:#151a12;border:1px solid #2b331f;border-radius:18px;padding:18px;margin:14px 0}
+h1{color:#ffd700;text-align:center;margin:6px 0 2px;font-size:30px;letter-spacing:1px}
+.by{text-align:center;margin:0 0 14px}.by a{color:#b6ff2e;font-weight:bold;text-decoration:none}
+label{display:block;margin:12px 0 4px;color:#e8e8c8;font-size:14px}
+input,select{width:100%;padding:13px;border-radius:12px;border:1px solid #3a4426;background:#0e120b;color:#fff;font-size:16px}
+.row{display:flex;gap:8px}.row>*{flex:1}
+button{width:100%;padding:14px;border:0;border-radius:14px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:12px}
+.gold{background:#ffd700;color:#111}.lime{background:#b6ff2e;color:#111}.dark{background:#262b1e;color:#fff}
+.eye{width:52px;background:#262b1e;color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.chip{padding:9px 12px;border-radius:999px;border:1px solid #444;background:#1c2115;cursor:pointer;font-size:14px}.chip.on{background:#ffd700;color:#111;border-color:#ffd700}
+.ins{display:flex;gap:6px;margin-top:8px}.ins input{padding:10px}.x{width:44px;background:#7a1f1f;color:#fff;border:0;border-radius:10px}
+.res{display:grid;grid-template-columns:1fr;gap:12px}.box{background:#ffd700;color:#111;border-radius:16px;padding:16px;text-align:center}.box b{display:block;font-size:22px}.box span{font-size:28px;font-weight:bold}
+.small{color:#cfd6a8;font-size:13px;text-align:center}.hidden{display:none}
+</style></head>
+<body><div class="wrap">
+<h1>CALCULADOR DE VENDAS</h1><p class="by">by <a href="https://www.instagram.com/italoborracha" target="_blank" rel="noopener">@italoborracha_fireworks</a></p>
+
+<div id="login" class="card">
+<label>Digite sua senha</label><div class="row"><input id="senha" type="password" placeholder="Digite sua senha"><button class="eye" id="olho1" type="button">Olho</button></div>
+<button class="gold" id="entrar" type="button">ENTRAR</button>
+<button class="dark" id="irCadastro" type="button">FAZER CADASTRO</button>
+<p class="small" id="msgLogin"></p></div>
+
+<div id="cadastro" class="card hidden">
+<label>Foto</label><input type="file" accept="image/*">
+<label>Nome completo</label><input id="cNome">
+<label>WhatsApp</label><input id="cZap" placeholder="(00) 00000-0000">
+<label>MEI / CNPJ / CPF</label><input id="cDoc">
+<label>Ramo</label><input id="cRamo">
+<label>Senha</label><div class="row"><input id="cSenha" type="password"><button class="eye" id="olho2" type="button">Olho</button></div>
+<label>Confirmar senha</label><div class="row"><input id="cSenha2" type="password"><button class="eye" id="olho3" type="button">Olho</button></div>
+<button class="lime" id="salvarCad" type="button">SALVAR E VOLTAR</button>
+<button class="dark" id="voltarLogin" type="button">VOLTAR</button><p class="small" id="msgCad"></p></div>
+
+<div id="admin" class="card hidden"><h2 style="text-align:center">PAINEL ADMIN</h2><p class="small">Acesso restrito.</p><button class="dark" id="sairAdmin" type="button">SAIR</button></div>
+
+<div id="calc" class="hidden">
+<div class="card"><p style="margin:0"><b>IA GERENTE CALCULADOR</b><br><span class="small">Me fala o produto e os insumos. Eu pergunto o que faltar.</span></p>
+<label>O que voce vende? Nome + tamanho / peso / area / tempo</label><input id="produto" placeholder="Digite aqui">
+<label>Localidade</label><select id="local"><option>Centro</option><option>Bairro nobre</option><option>Bairro</option><option>Vila</option><option>Regiao afastada</option><option>Comunidade</option><option>Outros</option></select>
+<label>Quais insumos / materiais acompanham?</label><div id="lista"></div>
+<button class="dark" id="add" type="button">+ ADICIONAR INSUMO</button>
+<p class="small">Para cada insumo: Nome + Quantidade comprada + Valor total pago. Eu calculo quanto custa em 1 unidade. 1 sacola, 1 caixa, 1 lacre por unidade. 1 pedaco de fita / film. 250g usa 250g, nao 1kg.</p>
+<label>Plataforma</label><div class="chips" id="plats"></div>
+<button class="gold" id="calcular" type="button">CALCULAR</button>
+<button class="dark" id="sair" type="button">SAIR</button></div>
+<div class="card"><div class="res">
+<div class="box"><b>PRECO SUGERIDO</b><span id="r1">R$ 0,00</span></div>
+<div class="box"><b>PRECO PARA ANUNCIAR</b><span id="r2">R$ 0,00</span></div>
+<div class="box"><b>PRECO COM MARGEM PARA PROMOCAO</b><span id="r3">R$ 0,00</span><br><span id="rPct" style="font-size:16px"></span></div>
+</div></div></div></div>
+<script>
+function $(id){return document.getElementById(id)}
+function olho(btn,input){btn.addEventListener('click',function(){input.type=input.type==='password'?'text':'password'})}
+olho($('olho1'),$('senha'));olho($('olho2'),$('cSenha'));olho($('olho3'),$('cSenha2'));
+function show(id){['login','cadastro','admin','calc'].forEach(function(x){$(x).classList.add('hidden')});$(id).classList.remove('hidden')}
+$('irCadastro').addEventListener('click',function(){show('cadastro')});
+$('voltarLogin').addEventListener('click',function(){show('login')});
+$('sair').addEventListener('click',function(){$('senha').value='';show('login')});
+$('sairAdmin').addEventListener('click',function(){$('senha').value='';show('login')});
+function entrar(){var s=$('senha').value.trim();if(s==='METODO1507'){show('calc');$('msgLogin').textContent=''}else if(s==='@IB208425173251204090326'){show('admin');$('msgLogin').textContent=''}else{$('msgLogin').textContent='Senha incorreta. Confira e tente de novo.'}}
+$('entrar').addEventListener('click',entrar);$('senha').addEventListener('keydown',function(e){if(e.key==='Enter')entrar()});
+$('salvarCad').addEventListener('click',function(){if(!$('cNome').value||!$('cZap').value||!$('cDoc').value||!$('cRamo').value||!$('cSenha').value){$('msgCad').textContent='Preencha todos os campos.';return}if($('cSenha').value!==$('cSenha2').value){$('msgCad').textContent='Senhas diferentes.';return}$('msgCad').textContent='Cadastro salvo. Volte e entre com sua senha.';setTimeout(function(){show('login')},900)});
+var plats=['iFood','99Food','Keeta','Happy','Mercado Livre','Shopee','Elo7','Shein','Balcao'];var sel='Balcao';
+var taxas={iFood:0.27,'99Food':0.22,Keeta:0.20,Happy:0.18,'Mercado Livre':0.16,Shopee:0.14,Elo7:0.12,Shein:0.15,Balcao:0};
+plats.forEach(function(p){var d=document.createElement('div');d.className='chip'+(p===sel?' on':'');d.textContent=p;d.addEventListener('click',function(){sel=p;document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on')});d.classList.add('on')});$('plats').appendChild(d)});
+function novaLinha(){var d=document.createElement('div');d.className='ins';d.innerHTML='<input placeholder="Nome do insumo"><input placeholder="Qtd comprada" inputmode="decimal"><input placeholder="Valor pago" inputmode="decimal"><button class="x" type="button">X</button>';d.querySelector('.x').addEventListener('click',function(){d.remove()});$('lista').appendChild(d)}
+novaLinha();novaLinha();$('add').addEventListener('click',novaLinha);
+function num(v){if(!v)return 0;v=String(v).replace('R$','').trim().replace(/\./g,'').replace(',','.');var n=parseFloat(v);return isNaN(n)?0:n}
+function uso(nome,qtd){var m=String(nome).toLowerCase().match(/(\d+(?:[.,]\d+)?)\s*(g|kg|ml|l|un|unidade|unidades)/);if(m){var v=parseFloat(m[1].replace(',','.'));if(m[2]==='kg')return v*1000;if(m[2]==='l')return v*1000;return v}return 1}
+$('calcular').addEventListener('click',function(){
+var custo=0;document.querySelectorAll('#lista .ins').forEach(function(l){var ins=l.querySelectorAll('input');var nome=ins[0].value;var q=num(ins[1].value);var val=num(ins[2].value);if(!q||!val)return;var u=uso(nome,q);var base=q;if(/kg/.test(nome.toLowerCase()))base=q*1000;custo+=(val/base)*u;});
+if(custo<=0){$('r1').textContent='R$ 0,00';$('r2').textContent='R$ 0,00';$('r3').textContent='R$ 0,00';$('rPct').textContent='Preencha pelo menos um valor.';return}
+var loc={Centro:1.15,'Bairro nobre':1.18,Bairro:1.0,Vila:0.95,'Regiao afastada':0.92,Comunidade:0.90,Outros:1.0}[$('local').value]||1;
+var invis=custo*0.18;var base2=(custo+invis)*loc;var taxa=taxas[sel]||0;var sugerido=base2*(1+0.32);var anunciar=sugerido/(1-taxa);var promo=anunciar/0.85;
+function fmt(v){return 'R$ '+v.toFixed(2).replace('.',',')}
+$('r1').textContent=fmt(sugerido);$('r2').textContent=fmt(anunciar);$('r3').textContent=fmt(promo);$('rPct').textContent='Aplique 15% de desconto';
+});
+</script></body></html>
