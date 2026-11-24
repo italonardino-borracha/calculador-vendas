@@ -130,11 +130,11 @@ th{color:#ffd700}
 </div>
 
 <script>
-var PLATS=["【entity-iFood¦canonical_name=iFood】","99Food","Keeta","Happy","Mercado Livre","Shopee","Elo7","Shein","Balcao"];
-var PADRAO={taxas:{"【entity-iFood¦canonical_name=iFood】":27,"99Food":27,"Keeta":20,"Happy":18,"Mercado Livre":16,"Shopee":20,"Elo7":15,"Shein":18,"Balcao":0},inv:18,lucro:25,anunciar:28,promo:18,desc:15,loc:{"Centro":1.15,"Bairro":1.05,"Regiao afastada":1.10,"Interior":1.00}};
+var PLATS=["iFood","99Food","Keeta","Happy","Mercado Livre","Shopee","Elo7","Shein","Balcao"];
+var PADRAO={taxas:{"iFood":27,"99Food":27,"Keeta":20,"Happy":18,"Mercado Livre":16,"Shopee":20,"Elo7":15,"Shein":18,"Balcao":0},inv:18,lucro:25,anunciar:28,promo:18,desc:15,loc:{"Centro":1.15,"Bairro":1.05,"Regiao afastada":1.10,"Interior":1.00}};
 var SENHA_ADMIN="IB208425173251204090326";
 var SENHA_ALUNO="METODO1507";
-var sel="【entity-iFood¦canonical_name=iFood】";
+var sel="iFood";
 function $(id){return document.getElementById(id)}
 function limpa(s){return String(s||"").trim().replace(/\s/g,"").replace(/^@/,"")}
 function getCfg(){try{var c=JSON.parse(localStorage.getItem("calc_cfg"));if(c&&c.taxas)return c}catch(e){}return JSON.parse(JSON.stringify(PADRAO))}
