@@ -21,6 +21,8 @@ input::placeholder{color:#888}
 .x{background:#e11d48;border:0;color:#fff;border-radius:10px;height:42px;font-weight:bold;cursor:pointer}
 .add{width:100%;background:#333;border:0;color:#fff;border-radius:10px;padding:12px;font-weight:bold;cursor:pointer;margin-top:4px}
 .hint{color:#ffd700;font-size:12px;margin-top:10px;line-height:1.5}
+.erro{background:#e11d48;color:#fff;border-radius:12px;padding:14px;font-weight:bold;font-size:14px;line-height:1.5;margin-top:12px}
+.erro small{display:block;font-weight:normal;margin-top:4px}
 .plats{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
 .plats button{background:#2a2a2a;border:1px solid #444;color:#fff;border-radius:20px;padding:9px 13px;cursor:pointer;font-size:14px}
 .plats button.on{background:#ffd700;color:#000;border-color:#ffd700;font-weight:bold}
@@ -57,6 +59,7 @@ input::placeholder{color:#888}
 <div id="lista"></div>
 <button class="add" onclick="novaLinha()">+ ADICIONAR INSUMO</button>
 <div class="hint">Para cada insumo: Nome + Quantidade comprada + Valor total pago + Quanto usa em 1 unidade. Ex: Carne - 1kg - 50,30 - 250g. Sacola - 1000 - 27,00 - 1. O app calcula quanto custa em 1 unidade. 1 sacola, 1 caixa, 1 lacre por unidade. 250g usa 250g, não 1kg.</div>
+<div id="alerta" class="erro hidden"></div>
 <label>Plataforma</label>
 <div class="plats" id="plats"></div>
 <button class="calc" onclick="calcular()">CALCULAR</button>
@@ -83,11 +86,22 @@ novaLinha();novaLinha();
 function num(v){if(!v)return 0;v=String(v).trim().replace(/\s/g,"");if(v.indexOf(",")>-1){v=v.replace(/\./g,"").replace(",",".")}return parseFloat(v)||0}
 function qtdBase(txt){if(!txt)return 0;var s=String(txt).toLowerCase().replace(/\s/g,"").replace(",",".");var n=parseFloat(s)||0;if(s.indexOf("kg")>-1)return n*1000;if(s.indexOf("g")>-1)return n;if(s.indexOf("l")>-1)return n*1000;if(s.indexOf("ml")>-1)return n;return n}
 function usaBase(txt){if(!txt||!String(txt).trim())return 1;var s=String(txt).toLowerCase().replace(/\s/g,"").replace(",",".");var n=parseFloat(s)||0;if(s.indexOf("kg")>-1)return n*1000;if(s.indexOf("g")>-1)return n;if(s.indexOf("l")>-1)return n*1000;if(s.indexOf("ml")>-1)return n;return n||1}
+function isPeso(txt){var s=String(txt||"").toLowerCase();return s.indexOf("kg")>-1||s.indexOf("g")>-1||s.indexOf("ml")>-1||s.indexOf("l")>-1}
+function pesoProduto(txt){var m=String(txt||"").toLowerCase().replace(",",".").match(/(\d+(?:\.\d+)?)\s*(kg|g|ml|l)\b/);if(!m)return 0;var n=parseFloat(m[1]);if(m[2]==="kg")return n*1000;if(m[2]==="g")return n;if(m[2]==="l")return n*1000;if(m[2]==="ml")return n;return 0}
 function fmt(v){return "R$ "+v.toFixed(2).replace(".",",")}
+function mostrarErro(msg){var a=document.getElementById("alerta");a.classList.remove("hidden");a.innerHTML=msg;document.getElementById("r1").textContent="R$ 0,00";document.getElementById("r2").textContent="R$ 0,00";document.getElementById("r3").textContent="R$ 0,00";document.getElementById("rPct").textContent=""}
+function limparErro(){document.getElementById("alerta").classList.add("hidden")}
 function calcular(){
-  var rows=document.querySelectorAll("#lista .row");var soma=0;
-  rows.forEach(function(r){var ins=r.querySelectorAll("input");var nome=ins[0].value,qtdTxt=ins[1].value,val=num(ins[2].value),usaTxt=ins[3].value;if(!nome||!qtdTxt||!val)return;var q=qtdBase(qtdTxt);if(q<=0)return;var usa=usaBase(usaTxt);var custo=(val/q)*usa;soma+=custo});
-  if(soma<=0){document.getElementById("r1").textContent="R$ 0,00";document.getElementById("r2").textContent="R$ 0,00";document.getElementById("r3").textContent="R$ 0,00";document.getElementById("rPct").textContent="Preencha pelo menos um valor.";return}
+  limparErro();
+  var rows=document.querySelectorAll("#lista .row");var soma=0;var somaPeso=0;var temPeso=false;
+  rows.forEach(function(r){var ins=r.querySelectorAll("input");var nome=ins[0].value,qtdTxt=ins[1].value,val=num(ins[2].value),usaTxt=ins[3].value;if(!nome||!qtdTxt||!val)return;var q=qtdBase(qtdTxt);if(q<=0)return;var usa=usaBase(usaTxt);var custo=(val/q)*usa;soma+=custo;if(isPeso(usaTxt)){somaPeso+=usa;temPeso=true}});
+  if(soma<=0){mostrarErro("Preencha pelo menos um insumo com valor.");return}
+  var prod=document.getElementById("produto").value;
+  var pesoProd=pesoProduto(prod);
+  if(pesoProd>0&&temPeso){
+    if(somaPeso>pesoProd){mostrarErro("PESO ERRADO - NÃO CALCULEI.<small>Você escreveu "+prod.toUpperCase()+", mas colocou "+somaPeso+"g de insumos com peso. Está "+(somaPeso-pesoProd)+"g a mais. Ajuste o Usa em 1 un. antes de calcular.</small>");return}
+    if(somaPeso<pesoProd*0.5){mostrarErro("FALTA PESO - CONFERE?<small>Você escreveu "+prod.toUpperCase()+", mas colocou só "+somaPeso+"g de insumos com peso. Faltam "+(pesoProd-somaPeso)+"g. Você esqueceu algum insumo?</small>");return}
+  }
   var locF={"Centro":1.15,"Bairro":1.05,"Região afastada":1.10,"Interior":1.0}[document.getElementById("local").value]||1;
   var custo=soma*1.18*locF;var taxa=TAXAS[sel]||0;var sugerido=custo/(1-taxa);sugerido=sugerido*1.25;var anunciar=sugerido*1.28;var promo=anunciar*1.18;
   document.getElementById("r1").textContent=fmt(sugerido);document.getElementById("r2").textContent=fmt(anunciar);document.getElementById("r3").textContent=fmt(promo);document.getElementById("rPct").textContent="Aplique 15% de desconto";
